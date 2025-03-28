@@ -41,15 +41,16 @@ class ParentComponent extends Component {
     super(props);
     this.state = {
       count: 0,
-      onCount: () => {this.setState({count: this.state.count + 1})}
     };
   }
+  onCount = () => {this.setState({count: this.state.count + 1})}
+
 
   render() {
     return(
       <div>
-        <ChildComponent count = {this.state.count}/>
-        <button onClick={this.state.onCount}>button from parent</button>
+        <ChildComponent count = {this.state.count} onCount = {this.onCount}/>
+        <button onClick={this.onCount}>Button from parent</button>
       </div>
       
     )
@@ -57,10 +58,14 @@ class ParentComponent extends Component {
 }
 
 
-class ChildComponent extends PureComponent {
+class ChildComponent extends Component {
+
   render() {
     return(
+      <div>
       <h4>Count: {this.props.count}</h4>
+      <button onClick={this.props.onCount}>Button from Child</button>
+      </div>
     )
   }
 }
