@@ -1,6 +1,6 @@
-import { Component } from "react";
+import { Component, PureComponent } from "react";
 
-class ContentRating extends Component {
+class ContentRating extends PureComponent {
   state = {
     numberOfLikes: 0,
     numberOfDislikes: 0,
@@ -29,7 +29,38 @@ class ContentRating extends Component {
         <h2>Number of Dislikes = {this.state.numberOfDislikes}</h2>
         <button onClick={this.state.onLike}>Like</button>
         <button onClick={this.state.onDislike}>Dislike</button>
+        <ParentComponent/>
     </div>
+    )
+  }
+}
+
+
+class ParentComponent extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      count: 0,
+      onCount: () => {this.setState({count: this.state.count + 1})}
+    };
+  }
+
+  render() {
+    return(
+      <div>
+        <ChildComponent count = {this.state.count}/>
+        <button onClick={this.state.onCount}>button from parent</button>
+      </div>
+      
+    )
+  }
+}
+
+
+class ChildComponent extends PureComponent {
+  render() {
+    return(
+      <h4>Count: {this.props.count}</h4>
     )
   }
 }
